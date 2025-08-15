@@ -1,8 +1,10 @@
 # CARDio - A PCB Business Card
-![alt text](<Screenshot 2025-08-15 at 11.21.53.png>)
-![alt text](<Screenshot 2025-08-15 at 11.21.58.png>)
-![alt text](image-1.png)
-![alt text](image.png)
+
+<img src="render_front.png" alt="drawing" width="350"/>
+<img src="render_back.png" alt="drawing" width="200"/>
+<img src="image-1.png" alt="drawing" width="250"/>
+<img src="image.png" alt="drawing" width="250"/>
+
 
 ## Project Description
 CARDio is a PCB business card with an integrated electrocardiogram (ECG). Essentially it uses a MAX30102 heart-rate sensor to measure heart rate and pulse oximetry data, and display this using 12 NeoPixel RGB LEDs. It is controlled by an ESP32-C3 microcontroller which is both WiFi and BLE enabled.
