@@ -1,0 +1,52 @@
+# EasyEDA local Auto Router
+
+1) Supported OS:
+
+	Windows7(x64) or later 64bit Windows
+	Ubuntu17.04(x64) or other 64bit Linux
+	MacOS(x64)
+	
+	Doesn't support 32bit system
+
+2) Start local Auto Router:
+
+	Double click "win64.bat" in Windows.
+	Run "sh lin64.sh" on command prompt in Linux. Make sure the command prompt command path located the folder.
+	Run "sh mac64.sh" on command prompt in MacOS.
+
+3) If local auto router is unavailable:
+
+	1) Chrome
+	
+		You need to upgrade Chrome to the newest version.	
+	
+	2) Firefox
+	
+		1. Type "about:config" into the address bar then press enter
+		2. Search and double click the options as below (change the values to "true"):
+			network.websocket.allowInsecureFromHTTPS
+			security.mixed_content.block_active_content
+		3. Re-open Firefox and try again.
+		
+4) If autorouter fail:
+Auto router is not good enough, suggest routing manually, recommed "Routing Confilct - RoundTrack" at the PCB right-hand panel.
+Sometimes, if you can't get it done, try the tips below.
+
+-	Use local auto router rather than cloud server.
+-	Make sure the net of PCB doesn't contain the special charaters, such as ` { } ^ ; ~ \ / [ ] =  etc. the chrarter - and _ are supported.
+-	Make sure the board oultine is closed, doesn't has board oultine overlap situation.
+-	Make sure there are no DRC cleance errors (short circuit issue), such as two different network pads overlapping, or different net pads in the same location within the package.
+-	Make sure no footprint outside the board outline.
+-	Make sure your canvas Gird size is set to 10mil, make sure the components align with the grid via: top menu - format - align grid.
+-	Place some vias at suitable position, and modify the vias' net as you want.
+-	Make sure PCB rule doesn't have 3 decimal places, EasyEDA auto router only support 2 decimal places.
+-	Skip the GND nets, add copper area to GND net.
+-	Use small tracks and small clearance, but make sure the value is more than 6mil.
+-	Route some key tracks manually before auto routing and ignore them when auto routing. 
+-	Add more layers, 4 layers or 6 layers. but that will make more cost.
+-	Change the components layout, make them have more space between each other.
+-	Don't make any via/pad overlap the different objects which can be set the net.
+-	Stop the auto-router, close the script, and re-open the script to run local auto-router server again.
+-	Sometimes, The auto-router won't work at the first time, please modify the layout and try serveral times.
+-	If only a few remaining networks cannot be completed, it is a normal phenomenon. Please manually route the remaining networks.
+-	Tell the error detail to us and send your PCB file as EasyEDA Source file to support@easyeda.com.
