@@ -14,7 +14,7 @@ Rev 3.0 PCB             |  Back
 ![alt text](assets/IMG_7430.gif)
 *GIF showing PCB working, lighting up according to measured heartrate.*
 ## Project Description
-**CARDio** is a PCB business card with an integrated electrocardiogram (ECG). Essentially it uses a MAX30102 heart-rate sensor to measure heart rate and pulse oximetry data, and display this using 12 NeoPixel RGB LEDs. It is controlled by an ESP32-C3 microcontroller which is both WiFi and BLE enabled.
+**CARDio** is a PCB business card with an integrated heart rate sensor. Essentially it uses a MAX30102 heart-rate sensor to measure heart rate and pulse oximetry data, and display this using 12 NeoPixel RGB LEDs. It is controlled by an ESP32-C3 microcontroller which is both WiFi and BLE enabled.
 
 ## Why?
 I had tinkered with the idea of PCB business cards in the past. My first iteration was essentially just a blank PCB with a silkscreen. It did have circuitry for an ATTiny85 and some NeoPixels, though I never got it to work properly. I liked the idea of handing a business card to somebody that wouldn't be thrown away - one that would actually have a use, like an NFC tag, flashing lights, or an ECG. Perhaps this was a little overkill, but I wanted something to hand to medical professionals or surgeons at conferences that would leave a memorable impression. It also demonstrates my interest to combine medicine and technology, in this case embedded electronics. 
@@ -35,4 +35,8 @@ For Rev 3.1, I will introduce the following new features:
 - Other sensors
 - And many more I haven't thought of yet.
 
+Oh yeah and its Rev 3.0 because my previous designs were:
+- Rev 1.0 - A simple blank board with a layout for ATTiny to control LEDs (non-functional)
+- Rev 2.0 - A PCB business card that runs Linux using Onion Omega2 SBCs (not completed)
+- Rev 3.0 (this one) - A PCB business card that measures your heart rate (complete)
 
