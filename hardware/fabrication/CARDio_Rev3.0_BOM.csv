@@ -1,0 +1,26 @@
+ID,Name,Designator,Footprint,Quantity,Manufacturer Part,Manufacturer,Supplier,Supplier Part,Price,Pins,3DModel,Contributor,JLCPCB Part Class,Package Display,link
+1,10nF,C1,C0603,1,CC0603KRX7R9BB103,YAGEO(国巨),LCSC,C100042,0.002,2,C0603_L1.6-W0.8-H0.8,lcsc,Extended Part,,https://item.szlcsc.com/362304.html
+2,100nF,"C5,C8,C13,C14",C0603,4,CC0603KRX7R9BB104,YAGEO(国巨),LCSC,C14663,0.002,2,C0603_L1.6-W0.8-H0.8,lcsc,Basic Part,,https://item.szlcsc.com/362304.html
+3,100nF,C6,C0603,1,CC0603KRX7R9BB104,YAGEO(国巨),LCSC,C14663,0.002,2,C0603_L1.6-W0.8-H0.8,lcsc,Basic Part,,https://lcsc.com/eda_search?q=C14663&%26type=1&ref=editor
+4,4.7uF,C12,C0603,1,CL10A475KP8NNNC,SAMSUNG(三星),LCSC,C1705,0.005,2,C0603_L1.6-W0.8-H0.8,lcsc,Extended Part,,https://item.szlcsc.com/362304.html
+5,1uF,"C2,C7",C0805,2,CL21B105KBFNNNE,SAMSUNG(三星),LCSC,C28323,0.009,2,C0805_L2.0-W1.3-H1.3,lcsc,Basic Part,,https://item.szlcsc.com/373011.html
+6,22uF,C17,C0805,1,CL21A226MAYNNNE,SAMSUNG(三星),LCSC,C602037,0.023,2,C0805_L2.0-W1.3-H1.3,LCSC,Extended Part,,https://item.szlcsc.com/373011.html
+7,10pF,"C3,C4",C0402,2,GRM1555C1H100JA01D,muRata(村田),LCSC,C76946,0.003,2,C0402_L1.0-W0.5-H0.5,lcsc,Extended Part,,https://item.szlcsc.com/15869.html
+8,3.3pF,"C10,C11",C0402,2,GJM1555C1H3R3BB01D,muRata(村田),LCSC,C76906,0.013,2,C0402_L1.0-W0.5-H0.5,lcsc,Extended Part,,https://item.szlcsc.com/15869.html
+9,10uF,"C9,C15,C16,C18,C19",C1206,5,CL31A106KBHNNNE,SAMSUNG(三星),LCSC,C13585,0.034,2,C1206_L3.2-W1.6-H1.3,lcsc,Basic Part,,https://item.szlcsc.com/89171.html
+10,10uF,C20,C1206,1,CL31A106KBHNNNE,SAMSUNG(三星),LCSC,C13585,0.034,2,C1206_L3.2-W1.6-H1.3,lcsc,Basic Part,,https://lcsc.com/eda_search?q=C13585&%26type=1&ref=editor
+11,USBLC6-2SC6,D1,SOT-23-6_L2.9-W1.6-P0.95-LS2.8-BL,1,USBLC6-2SC6,ST(意法半导体),LCSC,C7519,0.111,6,SOT-23-6_L2.9-W1.6-H1.5-LS2.8-P0.95,lcsc,Extended Part,,https://item.szlcsc.com/169042.html
+12,24nH,L1,L0201,1,LQP03TN24NH02D,muRata(村田),LCSC,C206441,0.005,2,L0201-RD,LCSC,Extended Part,,https://item.szlcsc.com/263310.html
+13,2.2nH,"L3,L4",L0402,2,LQG15HS2N2S02D,muRata(村田),LCSC,C86061,0.007,2,L0402_L1.0-W0.5-H0.5_BEAD,lcsc,Extended Part,,https://item.szlcsc.com/344049.html
+14,WS2812B-2020,"LED1,LED2,LED3,LED4,LED5,LED6,LED7,LED8,LED9,LED10,LED12,LED14,LED13",LED-SMD_4P-L2.0-W2.0-TL_WS2812B-2020,13,WS2812B-2020,worldsemi,LCSC,C965555,0.083,4,LED-SMD_4P-L2.0-W2.0-H0.8-TL_WS2812B-2020,LCSC,Extended Part,,https://item.szlcsc.com/1051115.html?ref=editor&logined=true
+15,A-SP192DGHC-C01-4T,PWR,LED0603-FD,1,A-SP192DGHC-C01-4T,Amicc(欧密格光电),LCSC,C19171301,0.023,2,LED0603_Inf,lcsc,Extended Part,,https://item.szlcsc.com/378100.html
+16,499Ω,R1,R0402,1,RC0402FR-07499RL,YAGEO(国巨),LCSC,C137970,0.001,2,R0402_L1.0-W0.5-H0.4,lcsc,Extended Part,,https://item.szlcsc.com/323315.html
+17,4.7kΩ,"R2,R3,R4",R0603,3,RC0603FR-074K7L,YAGEO(国巨),LCSC,C99782,0.001,2,R0603,lcsc,Extended Part,,https://www.mouser.in/datasheet/2/447/PYu_RT_1_to_0_01_RoHS_L_11-1669912.pdf
+18,5.1kΩ,"R5,R6,R7",R0603,3,RC0603FR-075K1L,YAGEO(国巨),LCSC,C105580,0.001,2,R0603,lcsc,Extended Part,,https://www.mouser.in/datasheet/2/447/PYu_RT_1_to_0_01_RoHS_L_11-1669912.pdf
+19,470Ω,R8,R0603,1,RC0603FR-07470RL,YAGEO(国巨),LCSC,C114669,0.001,2,R0603,lcsc,Extended Part,,https://www.mouser.in/datasheet/2/447/PYu_RT_1_to_0_01_RoHS_L_11-1669912.pdf
+20,ESP32-C3FH4,U1,QFN-32_L5.0-W5.0-P0.50-TL-EP3.7,1,ESP32-C3FH4,ESPRESSIF(乐鑫),LCSC,C2858491,2.27,33,QFN-32_L5.0-W5.0-H0.9-P0.50-TL-EP3.7,LCSC,Extended Part,No,https://item.szlcsc.com/18002.html
+21,MAX30102EFD+T_C6454833,U2,OESIP-14_L5.6-W3.3-P0.80-TL,1,MAX30102EFD+T,ADI(亚德诺)/MAXIM(美信),LCSC,C6454833,12.387,14,OESIP-14_L5.6-W3.3-P0.80-TL,lcsc,Extended Part,,https://img.jlc.com//pdf/applyPasteComponent/2021-06-08/704601A/5522618e6d904e69a6395222e90967dc/MAX30102.pdf
+22,40MHz,U3,CRYSTAL-SMD_4P-L3.2-W2.5-BL,1,L327S400H11L,Lucki(蓝晶),LCSC,C5261245,0.065,4,CRYSTAL-SMD_4P-L3.2-W2.5-BL,lcsc,Extended Part,,https://item.szlcsc.com/15866.html
+23,AMS1117-3.3_C347222,U4,SOT-223-4_L6.5-W3.5-P2.30-LS7.0-BR,1,AMS1117-3.3,UMW(友台半导体),LCSC,C347222,0.04,4,SOT-223-4P_L6.5-W3.5-H1.6-LS7.0-P2.30,LCSC,Extended Part,,https://item.szlcsc.com/84517.html
+24,AMS1117-1.8_C5250991,U5,SOT-223-3_L6.7-W3.7-P2.30-LS7.0-BR,1,AMS1117-1.8,TWGMC(台湾迪嘉),LCSC,C5250991,0.037,4,SOT-223-3_L6.7-W3.7-P2.30-LS7.0-BR,lcsc,Extended Part,,https://item.szlcsc.com/510355.html
+25,TYPE-C 16PIN 2MD(073),USB1,USB-C-SMD_TYPE-C-6PIN-2MD-073,1,TYPE-C 16PIN 2MD(073),SHOU HAN(首韩),LCSC,C2765186,0.058,16,USB-C-SMD_TYPE-C-6PIN-2MD-073,LCSC,Extended Part,,https://atta.szlcsc.com/upload/public/pdf/source/20210409/C2765186_34D42616F62DF94D17C4D63D74D9FD03.pdf

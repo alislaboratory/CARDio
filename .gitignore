@@ -3,5 +3,17 @@ router/
 # PlatformIO build output
 firmware/.pio/
 
+# KiCad local state, caches and backups
+*.kicad_prl
+*-backups/
+_autosave-*
+*.lck
+fp-info-cache
+\#auto_saved_files#
+
 # Local flash dumps (contain Wi-Fi credentials from old sketches)
 backup/
+
+# OS clutter
+.DS_Store
+Thumbs.db
