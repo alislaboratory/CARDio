@@ -1,1 +1,7 @@
 router/
+
+# PlatformIO build output
+firmware/.pio/
+
+# Local flash dumps (contain Wi-Fi credentials from old sketches)
+backup/
