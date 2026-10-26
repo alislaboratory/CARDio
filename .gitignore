@@ -9,6 +9,7 @@ firmware/.pio/
 _autosave-*
 *.lck
 fp-info-cache
+.history/
 \#auto_saved_files#
 
 # Local flash dumps (contain Wi-Fi credentials from old sketches)

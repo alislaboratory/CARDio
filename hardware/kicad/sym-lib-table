@@ -1,0 +1,4 @@
+(sym_lib_table
+	(version 7)
+	(lib (name "CARDio") (type "KiCad") (uri "${KIPRJMOD}/CARDio.kicad_sym") (options "") (descr "CARDio symbols (LCSC/EasyEDA parts used on the board)"))
+)

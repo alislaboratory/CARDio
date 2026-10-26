@@ -1,0 +1,4 @@
+(fp_lib_table
+	(version 7)
+	(lib (name "CARDio") (type "KiCad") (uri "${KIPRJMOD}/CARDio.pretty") (options "") (descr "CARDio footprints (LCSC/EasyEDA parts used on the board)"))
+)

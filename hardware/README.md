@@ -22,10 +22,11 @@ A credit-card-sized PCB: an ESP32-C3 reads a MAX30102 pulse sensor under your th
 
 | Folder | What's in it |
 | --- | --- |
-| [`kicad/`](kicad/) | **The KiCad 10 project**: schematic, PCB, design rules. Start here to modify the board. |
+| [`kicad/`](kicad/) | **The KiCad 10 project**: schematic, PCB, design rules, and project-local symbol and footprint libraries (`CARDio.kicad_sym`, `CARDio.pretty`), so it opens anywhere without extra libraries. Start here to modify the board. |
+| [`CARDio_schematic.pdf`](CARDio_schematic.pdf) | The schematic as a PDF |
 | [`fabrication/`](fabrication/) | What the cards were made from: Gerbers + drill (`CARDio_Rev3.0_gerbers.zip`), BOM and pick-and-place (CPL) for JLCPCB assembly. |
 | [`easyeda/`](easyeda/) | The original EasyEDA Standard sources the board was designed in (open them via *File → Open → EasyEDA…* in EasyEDA). |
-| [`tools/`](tools/) | The scripts used to convert the board to KiCad and to verify the conversion. |
+| [`tools/`](tools/) | The scripts used to convert the design to KiCad and to verify the conversion. |
 
 ## Block diagram
 
@@ -105,16 +106,31 @@ kicad-cli pcb export pos --format csv --units mm -o CARDio_CPL.csv kicad/CARDio.
 
 ## About the KiCad conversion
 
-The board was designed in EasyEDA Standard and converted to KiCad 10 for this repo. KiCad's built-in importer reproduces the routing exactly, but on this design it silently loses copper and paste that EasyEDA drew as filled regions inside footprints. [`tools/fix_easyeda_import.py`](tools/fix_easyeda_import.py) repairs that:
+The board was designed in EasyEDA Standard and converted to KiCad 10 for this repo. KiCad's importers get the routing and the parts right, but on this design they silently lose things. Three scripts in [`tools/`](tools/) repair them and can be re-run from a fresh import.
 
-- Restores the **antenna copper**, without which a board made from the KiCad files would have no antenna. It's modelled as a net-tie footprint, since an inverted-F antenna is shorted to ground by design.
+**PCB.** [`fix_easyeda_import.py`](tools/fix_easyeda_import.py) runs after `kicad-cli pcb import`. EasyEDA draws some copper and paste as filled regions inside footprints; KiCad turns those into footprint zones, which it never plots. The script:
+
+- Restores the **antenna copper**. Without it, a board made from the KiCad files would have no antenna. It's modelled as a net-tie footprint, since an inverted-F antenna is shorted to ground by design.
 - Restores the **solder-paste apertures** of every LCSC part with custom (notched) paste shapes: all the passives, the ESP32-C3 and the USB-C socket.
 - Hides reference/value labels EasyEDA kept hidden.
 - Refits text set in *Source Code Pro* (name, URL, "Place Thumb" and so on) to the exact size and position EasyEDA used. The font is embedded in the board file.
 - Records the real stackup (4 layers, black mask, white silk) and the design rules the board was made to (0.16 mm tracks, 0.15 mm clearance), with Power/Ground net classes matching the original.
+- Saves the footprints into the project library `CARDio.pretty`, keeping genuinely different variants separate (e.g. the flipped back-side LEDs), and re-links every footprint to it.
 - Makes **one deliberate change**: the "3V3" copper label moved 0.14 mm, because it sat 0.026 mm from a GND track.
 
-**Verification.** Gerbers plotted from the KiCad board were compared with the Gerbers JLCPCB actually made the cards from, using [`tools/compare_gerbers.py`](tools/compare_gerbers.py):
+**Schematic.** KiCad imports EasyEDA schematics only through the GUI (*Schematic Editor → File → Import → Non-KiCad Schematic*). [`fix_easyeda_schematic.py`](tools/fix_easyeda_schematic.py) runs on the result:
+
+- **Adds 32 missing junctions.** EasyEDA connects a wire that ends on the middle of another wire; KiCad needs a junction dot there. Without them, 13 nets (GND, VCC, 1V8, +5V, SDA, the crystal and antenna networks, and others) came out split.
+- **Sets real electrical pin types.** EasyEDA doesn't store them, so every passive pin came in as "input" and every IC pin as "unspecified". Now regulator outputs and USB VBUS/GND are power outputs, IC supply pins are power inputs, and so on, so ERC means something. It also adds a PWR_FLAG on the ESP32's LC-filtered RF supply.
+- Adds no-connect flags on pins unused by design: sensor N.C. pins, the ESP32's internal-flash SPI pins, USB SBU/shell, the last LED's data-out.
+- Renames the power LED to `PWR`, matching the PCB and the ordered BOM, and keeps EasyEDA's page frame out of the BOM.
+- Folds the importer's per-instance symbol copies into the project library `CARDio.kicad_sym` and fills in every symbol's footprint.
+
+[`sync_pcb_from_schematic.py`](tools/sync_pcb_from_schematic.py) then does the scriptable half of *Update PCB from Schematic*: it renames the board's nets to the schematic's and copies part fields onto the footprints. It first checks that every net groups exactly the same pads in both.
+
+### Verification
+
+Gerbers plotted from the KiCad board were compared with the Gerbers JLCPCB actually made the cards from, using [`compare_gerbers.py`](tools/compare_gerbers.py):
 
 | Layer | Differing area |
 | --- | --- |
@@ -124,4 +140,12 @@ The board was designed in EasyEDA Standard and converted to KiCad 10 for this re
 | Top / bottom solder mask | 0.16 % / 2.25 % (KiCad also opens mask over the USB-C socket's two plastic locating-peg holes) |
 | Top / bottom silkscreen | 0.01 % / 2.4 % (sub-pixel font rasterisation) |
 
-KiCad's design-rule check passes with **0 errors and 0 unconnected nets**. The only warnings are for the three smallest silkscreen labels ("ESP32-C3", "REV 1.0", "Place Thumb"), which printed legibly on the real cards. Silkscreen-over-copper checks are turned off for this project: the brain/nerve artwork deliberately runs under the LED footprints, and the fab clips silkscreen at pad openings.
+| Check | Result |
+| --- | --- |
+| DRC | **0 errors, 0 unconnected.** 3 warnings for the three smallest silkscreen labels ("ESP32-C3", "REV 1.0", "Place Thumb"), which printed legibly on the real cards. |
+| ERC | **0 errors.** 10 warnings: the labels on the unused GPIOs, kept from the original design as documentation. |
+| Schematic ↔ PCB parity | **0 issues.** All 35 multi-pin nets connect the same pads in both. |
+
+Silkscreen-over-copper checks are turned off for this project: the brain/nerve artwork deliberately runs under the LED footprints, and the fab clips silkscreen at pad openings.
+
+Cosmetic leftovers from the import, all harmless and easy to tidy by hand in KiCad: a few power symbols show their labels upside down, and EasyEDA's page frame is drawn inside KiCad's.

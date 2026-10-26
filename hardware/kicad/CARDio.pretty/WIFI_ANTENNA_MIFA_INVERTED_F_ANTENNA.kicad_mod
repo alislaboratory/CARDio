@@ -1,0 +1,115 @@
+(footprint "WIFI_ANTENNA_MIFA_INVERTED_F_ANTENNA"
+	(version 20260206)
+	(generator "pcbnew")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at 0 -2.6924 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "9dea2c39-a4ca-45f4-b75f-c941b9a370c6")
+		(effects
+			(font
+				(size 0.9144 0.9144)
+				(thickness 0.1524)
+			)
+			(justify left top)
+		)
+	)
+	(property "Value" "WIFI_ANTENNA"
+		(at 0 -4.4704 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "b6d27233-ab8e-4aa1-ac90-bc6491795b64")
+		(effects
+			(font
+				(size 0.9144 0.9144)
+				(thickness 0.1524)
+			)
+			(justify left top)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "1f59e835-fee9-4b18-948a-96521e6a6b63")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "66ef379b-ac19-4266-a106-d9459b93fa54")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(net_tie_pad_groups "ANT, GND")
+	(duplicate_pad_numbers_are_jumpers no)
+	(fp_poly
+		(pts
+			(xy 6.899967 2.939957) (xy 6.899967 -1.000041) (xy 5.19997 -1.000041) (xy 5.19997 1.639959) (xy 2.199951 1.639959)
+			(xy 2.199951 -1.000041) (xy 0.499954 -1.000041) (xy 0.499954 1.639959) (xy -2.50004 1.639959) (xy -2.50004 -1.000041)
+			(xy -4.200037 -1.000041) (xy -4.200011 3.400052) (xy -4.699883 3.400052) (xy -4.700036 -1.000041)
+			(xy -6.100033 -1.000041) (xy -6.099931 3.400052) (xy -7.000107 3.400052) (xy -7.000031 -1.500039)
+			(xy -2.000041 -1.500039) (xy -2.000041 1.13996) (xy -0.000045 1.13996) (xy -0.000045 -1.500039) (xy 2.69995 -1.500039)
+			(xy 2.69995 1.13996) (xy 4.699971 1.13996) (xy 4.699971 -1.500039) (xy 7.399966 -1.500039) (xy 7.399966 2.939957)
+			(xy 6.899967 2.939957)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(fill yes)
+		(layer "F.Cu")
+		(uuid "41e24ebf-e7f2-4e68-89f3-e2bfa661e548")
+	)
+	(fp_rect
+		(start 7.65 -1.75)
+		(end -7.2501 4.0999)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "05773b4e-9374-45fb-ab72-a003a8d4a6a9")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 0 270)
+		(layer "F.Fab")
+		(uuid "7af0fb53-e76c-42ae-b6e9-b04b99cad03a")
+		(effects
+			(font
+				(size 0.5 0.5)
+				(thickness 0.1)
+			)
+		)
+	)
+	(pad "ANT" smd rect
+		(at -4.4501 3.5999)
+		(size 0.6 0.5)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(solder_mask_margin 0.0508)
+		(solder_paste_margin 0)
+		(thermal_bridge_angle 0)
+		(uuid "e57a24b3-f554-495d-acb9-2d12470935b6")
+	)
+	(pad "GND" smd rect
+		(at -6.5499 3.5999)
+		(size 0.9 0.4)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(solder_mask_margin 0.0508)
+		(solder_paste_margin 0)
+		(thermal_bridge_angle 0)
+		(uuid "e7e983ca-18bf-4e16-9103-3950b275d339")
+	)
+	(embedded_fonts no)
+)

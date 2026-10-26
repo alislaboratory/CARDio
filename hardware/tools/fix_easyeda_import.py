@@ -21,6 +21,7 @@ Run with KiCad's bundled Python (it provides `pcbnew`):
 """
 
 import json
+import os
 import re
 import sys
 
@@ -37,6 +38,17 @@ def easyeda_footprints(path):
         parts = shape.split("#@$")
         ref = next((p.split("~")[10] for p in parts if p.startswith("TEXT~P")), None)
         yield ref, parts
+
+
+def signature(fp):
+    """What makes two footprints the same part: pads and graphics, in footprint coordinates."""
+    def mm(v):
+        return tuple(round(pcbnew.ToMM(c), 3) for c in (v.x, v.y))
+    pads = sorted((p.GetNumber(), mm(p.GetPosition()), mm(p.GetSize(pcbnew.F_Cu)), p.GetShape(pcbnew.F_Cu),
+                   round(p.GetOrientationDegrees(), 2), p.GetLayerSet().FmtHex()) for p in fp.Pads())
+    gfx = sorted((g.GetLayer(), mm(g.GetBoundingBox().GetOrigin()), mm(g.GetBoundingBox().GetEnd()))
+                 for g in fp.GraphicalItems() if g.GetClass() == "PCB_SHAPE")
+    return pads, gfx
 
 
 def parse_path(d):
@@ -201,6 +213,72 @@ def main(json_path, pcb_path):
             sys.exit("couldn't find a clear spot for the 3V3 label")
         label.Move(pcbnew.VECTOR2I(*best))
         print(f"moved the '3V3' copper label {pcbnew.ToMM(max(abs(best[0]), abs(best[1]))):.2f} mm to clear a GND track")
+
+    # --- 6. Project footprint library ----------------------------------------------
+    # The importer embeds footprints with no library name. Save one copy of each
+    # into CARDio.pretty next to the board and point every footprint at it, so
+    # the project is self-contained and the schematic can reference them.
+    lib_dir = os.path.join(os.path.dirname(os.path.abspath(pcb_path)), "CARDio.pretty")
+    io = pcbnew.PCB_IO_KICAD_SEXPR()
+    if os.path.isdir(lib_dir):
+        for f in os.listdir(lib_dir):
+            os.remove(os.path.join(lib_dir, f))
+    else:
+        io.CreateLibrary(lib_dir)
+    protos = {}  # library name -> normalised footprint
+    # Build each library copy from an unrotated, front-side instance where there is one.
+    order = sorted(board.GetFootprints(),
+                   key=lambda f: (f.IsFlipped(), f.GetOrientationDegrees() % 360 != 0, f.GetReference()))
+    for fp in order:
+        proto = pcbnew.FOOTPRINT(fp)  # a copy, normalised to the origin, front side, 0 deg
+        if proto.IsFlipped():
+            proto.Flip(proto.GetPosition(), pcbnew.FLIP_DIRECTION_LEFT_RIGHT)
+        proto.SetOrientationDegrees(0)
+        proto.SetPosition(pcbnew.VECTOR2I(0, 0))
+        proto.SetReference("REF**")
+        base = fp.GetFPID().GetLibItemName().wx_str().replace(" ", "_")
+        # EasyEDA lets different LCSC parts share a footprint name with slightly
+        # different geometry; keep each distinct variant rather than merging them.
+        name, n = base, 1
+        while name in protos and signature(protos[name]) != signature(proto):
+            n += 1
+            name = f"{base}_v{n}"
+        if name not in protos:
+            proto.SetFPID(pcbnew.LIB_ID("", name))
+            io.FootprintSave(lib_dir, proto)
+            protos[name] = proto
+        fp.SetFPID(pcbnew.LIB_ID("CARDio", name))
+    saved = protos
+
+    # Re-instantiate every footprint from its library copy (what "Update
+    # Footprints from Library" does), so rotated instances don't carry the
+    # importer's cosmetic artefacts. Position, side, rotation, nets and labels
+    # are kept; the pads and graphics were already checked identical above.
+    for fp in list(board.GetFootprints()):
+        lib_fp = pcbnew.FOOTPRINT(protos[fp.GetFPID().GetLibItemName().wx_str()])
+        lib_fp.SetFPID(fp.GetFPID())
+        if fp.IsFlipped():
+            lib_fp.Flip(lib_fp.GetPosition(), pcbnew.FLIP_DIRECTION_LEFT_RIGHT)
+        lib_fp.SetOrientation(fp.GetOrientation())
+        lib_fp.SetPosition(fp.GetPosition())
+        for new_field, old_field in ((lib_fp.Reference(), fp.Reference()), (lib_fp.Value(), fp.Value())):
+            new_field.SetText(old_field.GetText())
+            new_field.SetVisible(old_field.IsVisible())
+            new_field.SetPosition(old_field.GetPosition())
+            new_field.SetTextAngle(old_field.GetTextAngle())
+        for pad in lib_fp.Pads():
+            old = fp.FindPadByNumber(pad.GetNumber())
+            if old:
+                pad.SetNet(old.GetNet())
+        lib_fp.SetPath(fp.GetPath())
+        board.Remove(fp)
+        board.Add(lib_fp)
+    table = os.path.join(os.path.dirname(lib_dir), "fp-lib-table")
+    with open(table, "w", encoding="utf-8") as f:
+        f.write('(fp_lib_table\n\t(version 7)\n\t(lib (name "CARDio") (type "KiCad") '
+                '(uri "${KIPRJMOD}/CARDio.pretty") (options "") '
+                '(descr "CARDio footprints (LCSC/EasyEDA parts used on the board)"))\n)\n')
+    print(f"saved {len(saved)} footprints to CARDio.pretty and linked the board to it")
 
     board.EmbedFonts()  # so the board renders the same on machines without the font
     board.Save(pcb_path)
